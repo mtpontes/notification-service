@@ -18,7 +18,7 @@ class GoogleCalendarNotificationProviderImpl(NotificationProviderI):
         self.__google_credential_manager: GoogleCredentialManager = GoogleCredentialManager()
 
     def notify(self, events: list[EventModel], user: UserModel) -> None:
-        secret_key = user.complete_name
+        secret_key = user.full_name
         
         credentials: Credentials = self.__google_credential_manager.get_valid_credentials(secret_key=secret_key)
         self.__google_calendar_client = GoogleCalendar(credentials=credentials)

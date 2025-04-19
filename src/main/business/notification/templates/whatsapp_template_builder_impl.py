@@ -19,7 +19,7 @@ class WhatsappTemplateBuilder(TemplateBuilderI):
         self.user: UserModel = user
 
     def build_template(self) -> object:
-        user_name: str = self.user.complete_name.split(' ')[0]
+        user_name: str = self.user.full_name.split(' ')[0]
         user_phone: str = self.user.phone
 
         events_week_details: list[str] = self.__format_week_events(events_week=self.events_week)
