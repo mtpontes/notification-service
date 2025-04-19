@@ -21,6 +21,5 @@ class AppConfig:
         cls.mongo = DatabaseConfig.load_from_env()
         cls.whatsapp = WhatsappConfig.load_from_env()
         cls.secret_manager = SecretManagerConfig.load_from_env()
-        cls.enabled_providers = os.getenv(EnvConsts.ENABLED_PROVIDERS, '').split(',')
 
         cls.__loaded = True

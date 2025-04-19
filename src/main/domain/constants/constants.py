@@ -6,10 +6,3 @@ class Consts:
     
 class DateConsts:
     BR_PATTERN = '%d/%m/%Y'
-
-class EventConstants:
-    TITLE = 'title'
-    DESCRIPTION = 'description'
-    DT_INIT = 'dt_init'
-    DT_END = 'dt_end'
-    

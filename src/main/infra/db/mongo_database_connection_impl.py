@@ -4,7 +4,7 @@ from src.main.infra.db.database_connection_i import DatabaseConnectionI
 from src.main.infra.config.app_config import AppConfig, DatabaseConfig
 
 
-class MongoConnection(DatabaseConnectionI):
+class MongoDatabaseConnectionImpl(DatabaseConnectionI):
     __mongo_client = mongoengine
     
     def connect(self):

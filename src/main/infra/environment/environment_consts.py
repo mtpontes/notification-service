@@ -13,9 +13,6 @@ class NotificationProviderConsts:
     GOOGLE_CALENDAR = 'google_calendar'
     WHATSAPP = 'whatsapp'
 
-class EnvConsts:
-    ENABLED_PROVIDERS = 'ENABLED_PROVIDERS'
-    
 class WhatsappConsts:
     API_TOKEN = 'WHATSAPP_API_TOKEN'
 
