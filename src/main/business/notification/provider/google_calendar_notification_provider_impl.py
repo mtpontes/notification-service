@@ -7,7 +7,9 @@ from src.main.domain.models.user_model import UserModel
 from src.main.domain.models.event_model import EventModel
 from src.main.business.notification.templates.template_i import TemplateBuilderI
 from src.main.business.notification.provider.notification_provider_i import NotificationProviderI
-from src.main.business.notification.templates.google_calendar_template_utils import GoogleCalendarTemplateBuilderImpl
+from src.main.business.notification.templates.google_calendar_template_builder_impl import (
+    GoogleCalendarTemplateBuilderImpl,
+)
 
 
 class GoogleCalendarNotificationProviderImpl(NotificationProviderI):

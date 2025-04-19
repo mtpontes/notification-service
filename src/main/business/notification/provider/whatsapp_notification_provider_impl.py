@@ -6,7 +6,7 @@ from src.main.domain.models.event_model import EventModel
 from src.main.business.service.event_service import EventService
 from src.main.business.notification.templates.template_i import TemplateBuilderI
 from src.main.business.notification.provider.notification_provider_i import NotificationProviderI
-from src.main.business.notification.templates.whatsapp_template_utils import WhatsappTemplateBuilder
+from src.main.business.notification.templates.whatsapp_template_builder_impl import WhatsappTemplateBuilder
 
 
 class WhatsappNotificationProviderImpl(NotificationProviderI):
