@@ -1,10 +1,10 @@
 import mongoengine
 
-from src.main.infra.db.database_connection_i import DataConnectionI
+from src.main.infra.db.database_connection_i import DatabaseConnectionI
 from src.main.infra.config.app_config import AppConfig, DatabaseConfig
 
 
-class MongoConnection(DataConnectionI):
+class MongoConnection(DatabaseConnectionI):
     __mongo_client = mongoengine
     
     def connect(self):
@@ -15,3 +15,6 @@ class MongoConnection(DataConnectionI):
         print(mongo_uri)
 
         self.__mongo_client.connect(db=database, host=mongo_uri)
+
+    def close(self):
+        self.__mongo_client.disconnect()

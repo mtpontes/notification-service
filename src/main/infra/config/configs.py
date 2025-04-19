@@ -10,8 +10,8 @@ class DatabaseConfig:
     username: str
     password: str
     database: str
-    uri_args: str = 'notify-service-db?retryWrites=true&w=majority&appName=notifyService'
-
+    uri_args: str
+    
     @staticmethod
     def load_from_env():
         return DatabaseConfig(
@@ -19,6 +19,7 @@ class DatabaseConfig:
             username=os.getenv(DatabaseConsts.DB_USERNAME, 'admin'),
             password=os.getenv(DatabaseConsts.DB_PASSWORD, 'admin'),
             database=os.getenv(DatabaseConsts.DB_NAME),
+            uri_args=os.getenv(DatabaseConsts.DB_URI_ARGS),
         )
     
     def build_connection_string(self) -> str:
