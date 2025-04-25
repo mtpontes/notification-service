@@ -1,4 +1,4 @@
-import logging as log
+from src.main.infra.utils.log_utils import log
 from src.main.domain.models.user_model import UserModel
 from src.main.domain.models.event_model import EventModel
 from src.main.domain.repositories.user_repository import UserRepository
@@ -27,4 +27,4 @@ class App:
                 try: 
                     provider.notify(events, user)
                 except Exception as e:
-                    log.info("Error notifying %s: %s", user.name, e)
+                    log.info("Error notifying %s: %s", user.full_name, e)

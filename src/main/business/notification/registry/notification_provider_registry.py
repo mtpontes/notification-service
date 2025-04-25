@@ -1,18 +1,19 @@
+from src.main.infra.utils.log_utils import log
 from src.main.business.notification.provider.notification_provider_i import NotificationProviderI
 
 
 class NotificationProviderRegistry:
     def __init__(self):
-        self.__providers: dict[str, NotificationProviderI] = {}
+        self._providers: dict[str, NotificationProviderI] = {}
 
     def register(self, provider_name: str, implementation: NotificationProviderI):
-        self.__providers[provider_name] = implementation
+        self._providers[provider_name] = implementation
         return self
 
     def get_choosen_providers(self, provider_keys: list[str]) -> list[NotificationProviderI]:
-        print(self.__providers)
+        log.info('%s - Providers: %s', self.__class__.__name__, self._providers)
         providers = []
         for name in provider_keys:
-            provider = self.__providers.get(name)
+            provider = self._providers.get(name)
             providers.append(provider)
         return providers

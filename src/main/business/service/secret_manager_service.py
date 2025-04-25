@@ -2,6 +2,7 @@ import json
 
 from boto3.session import Session
 
+from src.main.infra.utils.log_utils import log
 from src.main.infra.config.app_config import AppConfig
 from src.main.infra.environment.environment_consts import SecretManagerConsts
 
@@ -12,6 +13,14 @@ class SecretManagerService():
         self.client = Session().client(
             service_name=SecretManagerConsts.SERVICE_NAME, 
             region_name=AppConfig.secret_manager.region
+        )
+        log.info('Constructor - %s', self)
+        
+    def __str__(self):
+        return (
+            f"{self.__class__.__name__}"
+            f"(service_name='{SecretManagerConsts.SERVICE_NAME}', "
+            f"region='{AppConfig.secret_manager.region}')"
         )
 
     def get_secret(self, secret_name: str) -> dict:
@@ -27,8 +36,9 @@ class SecretManagerService():
                 SecretId=secret_name,
                 SecretString=json.dumps(secrets_key_value), # Deve ser um json
             )
-        except Exception as e:
+        except Exception: # TODO: Tratar possível erro ao atualizar
             pass
         
 class EmptySecretException(Exception):
-    pass
+    def __init__(self, message: str = "Secret error"):
+        super().__init__(message)

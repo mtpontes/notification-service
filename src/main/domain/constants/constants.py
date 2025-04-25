@@ -1,8 +1,12 @@
-class Consts:
-    NUMBER_ZERO = 0
-    NUMBER_TRHEE = 3
-    NUMBER_SEVEN = 7
+class TemplateConsts:
     NOT_APPLICABLE = '• N/A'
+
+class NumberConsts:
+    ZERO = 0
+    ONE = 1
+    TWO = 2
+    TRHEE = 3
+    SEVEN = 7
     
 class DateConsts:
     BR_PATTERN = '%d/%m/%Y'

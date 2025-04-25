@@ -2,14 +2,20 @@ from datetime import time
 
 from gcsa.event import EmailReminder, Event, PopupReminder
 
+from src.main.infra.utils.log_utils import log
 from src.main.domain.models.event_model import EventModel
 from src.main.business.notification.templates.template_i import TemplateBuilderI
 
 
 class GoogleCalendarTemplateBuilderImpl(TemplateBuilderI):
     def __init__(self, event_model: EventModel):
-        self.event_model = event_model
-    
+        self.event_model: EventModel = event_model
+        log.info('Construtor - %s', self)
+
+    def __str__(self):
+        return f"{self.__class__.__name__}(event_model={self.event_model})"
+
+
     def build_template(self) -> object:
         return Event(
             summary=self.event_model.title,

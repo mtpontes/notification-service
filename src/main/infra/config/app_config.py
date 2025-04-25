@@ -1,5 +1,7 @@
 from typing import ClassVar
 
+from dotenv import load_dotenv
+
 from src.main.infra.config.configs import SecretManagerConfig, DatabaseConfig, WhatsappConfig 
 
 
@@ -12,12 +14,14 @@ class AppConfig:
     __loaded: ClassVar[bool] = False
 
     @classmethod
-    def load(cls) -> None:
+    def load(cls):
         if cls.__loaded:
-            return
+            return cls
+        load_dotenv()
 
         cls.mongo = DatabaseConfig.load_from_env()
         cls.whatsapp = WhatsappConfig.load_from_env()
         cls.secret_manager = SecretManagerConfig.load_from_env()
 
         cls.__loaded = True
+        return cls

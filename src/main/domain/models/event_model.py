@@ -7,7 +7,7 @@ from src.main.domain.models.user_model import UserModel
 
 class EventModel(Document):
     title = StringField(required=True)
-    description = StringField(Required=True)
+    description = StringField(required=True)
     dt_init = DateTimeField(required=True)
     dt_end = DateTimeField(required=True)
     user = ReferenceField(UserModel, required=True)
@@ -23,5 +23,5 @@ class EventModel(Document):
         return (
             f"EventModel(title='{self.title}', description='{self.description}', "
             f"dt_init='{self.dt_init}', dt_end='{self.dt_end}', "
-            f"user='{self.user.nome_completo}')"
+            f"user='{self.user.full_name}')"
         )
