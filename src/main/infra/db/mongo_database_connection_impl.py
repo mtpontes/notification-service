@@ -1,7 +1,7 @@
 import mongoengine
 
-from src.main.infra.db.database_connection_i import DatabaseConnectionI
 from src.main.infra.config.app_config import AppConfig, DatabaseConfig
+from src.main.infra.db.database_connection_i import DatabaseConnectionI
 
 
 class MongoDatabaseConnectionImpl(DatabaseConnectionI):

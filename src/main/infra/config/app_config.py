@@ -1,7 +1,5 @@
-import os
 from typing import ClassVar
 
-from src.main.infra.environment.environment_consts import EnvConsts
 from src.main.infra.config.configs import SecretManagerConfig, DatabaseConfig, WhatsappConfig 
 
 

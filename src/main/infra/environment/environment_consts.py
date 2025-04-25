@@ -7,7 +7,9 @@ class DatabaseConsts:
     DB_URI_ARGS = 'DB_URI_ARGS'
 
 class SecretManagerConsts:
+    SERVICE_NAME = 'secretsmanager'
     REGION = 'REGION'
+    SECRET_STRING = 'SecretString'
 
 class NotificationProviderConsts:
     GOOGLE_CALENDAR = 'google_calendar'
