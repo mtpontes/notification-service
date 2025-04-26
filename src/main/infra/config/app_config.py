@@ -1,3 +1,4 @@
+import os
 from typing import ClassVar
 
 from dotenv import load_dotenv
@@ -17,7 +18,9 @@ class AppConfig:
     def load(cls):
         if cls.__loaded:
             return cls
-        load_dotenv()
+        
+        if os.getenv('ENVIRONMENT', '') not in ('PRD', 'DEV'):
+            load_dotenv()
 
         cls.mongo = DatabaseConfig.load_from_env()
         cls.whatsapp = WhatsappConfig.load_from_env()
