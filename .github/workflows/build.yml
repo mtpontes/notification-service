@@ -1,0 +1,38 @@
+name: Build zip artifact
+on:
+  workflow_call:
+
+jobs:
+
+  build-artifact:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set repository files
+        uses: actions/checkout@v4
+      
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          mkdir package
+          pip install -r requirements.txt -t package/
+          cp -r src/* package/
+          cp lambda_function.py package/
+
+      - name: Create deployment zip
+        run: |
+          cd package
+          zip -r ../deployment.zip .
+          cd ..
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: lambda-deployment-package
+          path: deployment.zip
+          retention-days: 1
