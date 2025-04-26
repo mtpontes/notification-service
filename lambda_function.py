@@ -3,7 +3,6 @@ from src.main.infra.config.app_config import AppConfig
 from src.main.infra.db.database_connection_i import DatabaseConnectionI
 from src.main.infra.db.mongo_database_connection_impl import MongoDatabaseConnectionImpl
 
-
 def lambda_handler(event, _):
     AppConfig.load()  # Carrega configurações
 
