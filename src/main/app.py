@@ -24,7 +24,13 @@ class App:
                 self._notification_registry.get_choosen_providers(provider_keys=choosen_providers))
             
             for provider in notification_providers:
-                try: 
+                try:
+                    log.info(
+                        '%s - Notifying user: %s with provider %s', 
+                        self.__class__.__name__, 
+                        user.full_name, 
+                        provider.__class__.__name__
+                    )
                     provider.notify(events, user)
                 except Exception as e:
-                    log.info("Error notifying %s: %s", user.full_name, e)
+                    log.error("Error notifying %s: %s", user.full_name, e)
