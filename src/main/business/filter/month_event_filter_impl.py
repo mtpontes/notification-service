@@ -12,12 +12,11 @@ class MonthEventFilterImpl(EventFilterI):
         filtered_events = []
         for event in events:
             current_month = datetime.now().month
-            start = event.dt_init.month
             end = event.dt_end.month
 
-            if start is current_month or end is current_month:
+            if end is current_month:
                 filtered_events.append(event)
                 
-        filtered_events = sorted(filtered_events, key=lambda event: event.dt_fim)
+        filtered_events = sorted(filtered_events, key=lambda event: event.dt_end)
         log.info('%s - output: %s', self.__class__.__name__, filtered_events)
         return filtered_events
