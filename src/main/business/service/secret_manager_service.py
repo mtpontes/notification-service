@@ -24,9 +24,12 @@ class SecretManagerService():
         )
 
     def get_secret(self, secret_name: str) -> dict:
+        log.info('%s - catching secret', self.__class__.__name__)
+        
         result: dict[str, any] = self.client.get_secret_value(SecretId=secret_name)
         secrets: str | None = result.get(SecretManagerConsts.SECRET_STRING)
         if secrets is not None:
+            log.info('%s - secret loaded: %s', self.__class__.__name__, secrets)
             return json.loads(secrets)
         raise EmptySecretException("Secret not found")
         
