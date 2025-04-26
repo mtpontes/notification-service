@@ -1,0 +1,27 @@
+name: Setup infra
+on:
+  workflow_call:
+
+jobs:
+  setup-infra:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Configure AWS CLI
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      
+      - name: Create Terraform state bucket if not exists
+        env:
+          BUCKET_NAME: ${{ vars.TFSTATE_BUCKET_NAME }}
+        run: |
+          if aws s3api head-bucket --bucket "$BUCKET_NAME" 2>/dev/null; then
+            echo "State bucket already exists"
+          else
+            echo "State bucket not found. Creating..."
+            aws s3api create-bucket --bucket "$BUCKET_NAME" --region us-east-1
+            echo "State bucket created"
+          fi
