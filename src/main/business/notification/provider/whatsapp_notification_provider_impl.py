@@ -18,10 +18,10 @@ class WhatsappNotificationProviderImpl(NotificationProviderI):
         log.info('Constructor - %s', self)
 
     def __str__(self):
-        token_preview = f"{self._api_token[:4]}***" if self._api_token else "None"
         return (
             f"{self.__class__.__name__}"
-            f"(api_token='{token_preview}', "
+            f"(api_token='{self._api_token}', "
+            # f"(api_token='{self._api_token[:4]}', "
             f"event_service={self._event_service.__class__.__name__})"
         )
 
@@ -37,11 +37,10 @@ class WhatsappNotificationProviderImpl(NotificationProviderI):
         template_builder: TemplateBuilderI = WhatsappTemplateBuilder(events_week, events_month, user)
         template: dict = template_builder.build_template()
 
-
-        log.info('%s - sending notifications', self.__class__.__name__)
+        log.info('%s - final template: %s', self.__class__.__name__, template)
         response = self._client.post(
             url='https://graph.facebook.com/v22.0/673906565798611/messages',
-            headers={'Authorization': f'Bearer {self._api_token}'},
+            headers={'Authorization': f'Bearer {self._api_token}',  'User-Agent': 'python-requests/2.31.0'},
             json=template,
             timeout=5
         )

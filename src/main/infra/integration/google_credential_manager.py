@@ -17,6 +17,12 @@ class GoogleCredentialManager:
         self._secret_manager_service = SecretManagerService()
         log.info('Constructor - %s', self)
 
+    def __str__(self):
+        return (
+            f"{self.__class__.__name__}"
+            f"(secret_manager_service='{self._secret_manager_service.__class__.__name__}')"
+        )
+
     def get_valid_credentials(self, secret_key: str) -> Credentials:
         secret_value = self._secret_manager_service.get_secret(secret_key)
         credentials: Credentials = self._build_credentials(secret_value)

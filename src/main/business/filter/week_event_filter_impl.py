@@ -14,7 +14,7 @@ class WeekEventFilterImpl(EventFilterI):
             if days_to_expire >= NumberConsts.ZERO and days_to_expire <= NumberConsts.SEVEN:
                 filtered_events.append(event)
 
-        filtered_events = sorted(filtered_events, key=lambda event: event.dt_fim)
+        filtered_events = sorted(filtered_events, key=lambda event: event.dt_end)
         
         log.info('%s - output: %s', self.__class__.__name__, filtered_events)
         return filtered_events

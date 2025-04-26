@@ -13,3 +13,6 @@ def lambda_handler(event, _):
     App().run()       # Inicia a aplicação
 
     db_conn.close()   # Fecha conexão com banco
+
+if __name__ == "__main__":
+    lambda_handler('', '')

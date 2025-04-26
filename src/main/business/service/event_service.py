@@ -11,6 +11,12 @@ class EventService:
         self.__filter_month: EventFilterI = MonthEventFilterImpl()
         log.info('Constructor - %s', self)
 
+    def __str__(self):
+        return (
+            f"{self.__class__.__name__}"
+            f"(filter_week='{self.__filter_week.__class__.__name__}', "
+            f"filter_month='{self.__filter_month.__class__.__name__}')"
+        )
 
     def filter_week(self, events: list[EventModel]) -> list[EventModel]:
         log.info('%s - filter week input: %s', self.__class__.__name__, events)

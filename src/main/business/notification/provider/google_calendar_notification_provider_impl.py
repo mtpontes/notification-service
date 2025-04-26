@@ -39,6 +39,7 @@ class GoogleCalendarNotificationProviderImpl(NotificationProviderI):
             template_builder: TemplateBuilderI = GoogleCalendarTemplateBuilderImpl(event_model=event_model)
             event: Event = template_builder.build_template()
             self._google_calendar_client.add_event(event=event)
+        log.info('%s - events added', self.__class__.__name__)
         
     def _remove_existing_calendar_events(self, event_models: list[EventModel]) -> list[EventModel]:
         log.info('%s - removing existing events', self.__class__.__name__)
