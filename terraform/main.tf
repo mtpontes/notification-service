@@ -19,8 +19,8 @@ module "s3" {
 
 # Lambda
 module "lambda" {
-  depends_on = [ module.s3.lambda_zip_object_id ]
   source                                = "./lambda_module"
+  depends_on                            = [ module.s3.lambda_zip_object_id ]
   notification_service_source_bucket_id = module.s3.notification_service_source_bucket_id
   code_result_zip                       = var.code_result_zip
   lambda_file_zip_name                  = var.lambda_file_zip_name
@@ -31,4 +31,10 @@ module "lambda" {
   db_port                               = var.db_port
   db_uri                                = var.db_uri
   db_uri_args                           = var.db_uri_args
+}
+
+module "event_bridge" {
+  source                          = "./event_bridge"
+  depends_on                      = [ module.lambda.notification_service_lambda_arn ]
+  notification_service_lambda_arn = module.lambda.notification_service_lambda_arn
 }
