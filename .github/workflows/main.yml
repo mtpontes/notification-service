@@ -16,9 +16,3 @@ jobs:
     needs: build
     uses: ./.github/workflows/infra.yml
     secrets: inherit
-
-  deploy:
-    needs: infra
-    uses: ./.github/workflows/deploy.yml
-    secrets: inherit
-
