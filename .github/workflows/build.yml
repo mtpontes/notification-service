@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Set repository files
+      - name: Set up repository files
         uses: actions/checkout@v4
       
       - name: Set up Python 3.10
@@ -27,12 +27,12 @@ jobs:
       - name: Create deployment zip
         run: |
           cd package
-          zip -r ../deployment.zip .
+          zip -r "../${{ vars.CODE_RESULT_ZIP }}" .
           cd ..
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: lambda-deployment-package
-          path: deployment.zip
+          path: ${{ vars.CODE_RESULT_ZIP }}
           retention-days: 1

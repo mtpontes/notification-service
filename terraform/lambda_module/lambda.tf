@@ -1,4 +1,3 @@
-# Resource
 resource "aws_lambda_function" "notification_service_lambda" {
   function_name = "notification_service_lambda"
   handler       = "lambda_function.lambda_handler"
@@ -7,6 +6,8 @@ resource "aws_lambda_function" "notification_service_lambda" {
 
   s3_bucket     = var.notification_service_source_bucket_id
   s3_key        = "${var.lambda_file_zip_name}.zip"
+
+  source_code_hash = filebase64sha256(var.code_result_zip)
 
   runtime       = "python3.13"
   timeout       = 60
@@ -24,39 +25,55 @@ resource "aws_lambda_function" "notification_service_lambda" {
   }
 }
 
-# Cria Role
-resource "aws_iam_role" "notification_service_lambda_role" {
-  name                = "notification_service_lambda_role"
 
-  assume_role_policy  = jsonencode({
+# Assume role
+resource "aws_iam_role" "notification_service_lambda_role" {
+  name = "notification_service_lambda_role"
+
+  assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
       {
-        "Effect" = "Allow"
-        "Action" = ["sts:AssumeRole"]
-        "Principal" = {
-          "Service" = "lambda.amazonaws.com"
+        Action = "sts:AssumeRole"
+        Effect = "Allow"
+        Sid    = ""
+        Principal = {
+          Service = ["lambda.amazonaws.com"]
         }
       },
+    ]
+  })
+
+  tags = {
+    tag-key = "tag-value"
+  }
+}
+
+# Create Role with policies
+resource "aws_iam_role_policy" "notification_service_lambda_policies" {
+  name = "notification_service_lambda_policies"
+  role = aws_iam_role.notification_service_lambda_role.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
       {
-        "Effect": "Allow",
-        "Action": [
+        "Effect" = "Allow",
+        "Action" = [
           "logs:CreateLogGroup",
           "logs:CreateLogStream",
           "logs:PutLogEvents"
         ],
-        "Resource": "*"
+        "Resource" = "*"
       },
       {
-        "Effect": "Allow",
-        "Action": [
+        "Effect" = "Allow",
+        "Action" = [
           "secretsmanager:GetSecretValue",
           "secretsmanager:PutSecretValue",
         ],
-        "Resource": "*"
+        "Resource" = "*"
       },
     ]
   })
 }
-
-

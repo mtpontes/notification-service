@@ -3,25 +3,26 @@ provider "aws" {
   region = var.region
 }
 
+# Backend is configured with arguments via pipeline
 terraform {
-  backend "s3" {
-    bucket = var.tfstate_bucket_name
-    key    = "terraform.state"
-    region = var.region
-  }
+  backend "s3" {}
 }
 
 ################################### Modules ####################################
 
 # S3
 module "s3" {
-  source = "./s3_module"
+  source                = "./s3_module"
+  lambda_file_zip_name  = var.lambda_file_zip_name
+  code_result_zip       = var.code_result_zip
 }
 
 # Lambda
 module "lambda" {
+  depends_on = [ module.s3.lambda_zip_object_id ]
   source                                = "./lambda_module"
   notification_service_source_bucket_id = module.s3.notification_service_source_bucket_id
+  code_result_zip                       = var.code_result_zip
   lambda_file_zip_name                  = var.lambda_file_zip_name
   whatsapp_api_token                    = var.whatsapp_api_token
   db_username                           = var.db_username
