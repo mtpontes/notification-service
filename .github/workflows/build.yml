@@ -21,7 +21,7 @@ jobs:
           python -m pip install --upgrade pip
           mkdir package
           pip install -r requirements.txt -t package/
-          cp -r src/* package/
+          cp -r src package/
           cp lambda_function.py package/
 
       - name: Create deployment zip

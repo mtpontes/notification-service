@@ -25,6 +25,17 @@ resource "aws_lambda_function" "notification_service_lambda" {
   }
 }
 
+resource "aws_cloudwatch_log_group" "notification_service_lambda_logs" {
+  name              = "/aws/lambda/notification_service_lambda"
+  retention_in_days = 30
+}
+
+resource "aws_lambda_permission" "allow_scheduler" {
+  statement_id  = "AllowExecutionFromEventBridge"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.notification_service_lambda.function_name
+  principal     = "scheduler.amazonaws.com"
+}
 
 # Assume role
 resource "aws_iam_role" "notification_service_lambda_role" {
@@ -80,7 +91,7 @@ resource "aws_iam_role_policy" "notification_service_lambda_policies" {
           "kms:Decrypt",
           "kms:DescribeKey"
         ],
-        "Resource" = "arn:aws:kms:us-east-1:314146297418:key/40725092-7ef8-4ccb-a1b9-afd3aa4f79c3"
+        "Resource" = "*"
       }
     ]
   })

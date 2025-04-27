@@ -41,7 +41,7 @@ resource "aws_scheduler_schedule" "notification_service_scheduler" {
     mode = "OFF"
   }
 
-  schedule_expression = "rate(1 minute)"
+  schedule_expression = "rate(12 hours)"
 
   target {
     arn      = var.notification_service_lambda_arn
