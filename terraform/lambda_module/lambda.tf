@@ -74,6 +74,14 @@ resource "aws_iam_role_policy" "notification_service_lambda_policies" {
         ],
         "Resource" = "*"
       },
+      {
+        "Effect" = "Allow",
+        "Action" = [
+          "kms:Decrypt",
+          "kms:DescribeKey"
+        ],
+        "Resource" = "arn:aws:kms:us-east-1:314146297418:key/40725092-7ef8-4ccb-a1b9-afd3aa4f79c3"
+      }
     ]
   })
 }
