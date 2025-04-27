@@ -10,7 +10,6 @@ class AppConfig:
     mongo: ClassVar[DatabaseConfig]
     whatsapp: ClassVar[WhatsappConfig]
     secret_manager: ClassVar[SecretManagerConfig]
-    enabled_providers: ClassVar[list[str]]
 
     __loaded: ClassVar[bool] = False
 
