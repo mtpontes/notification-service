@@ -83,7 +83,6 @@ resource "aws_iam_role" "notification_service_lambda_role" {
       {
         Action = "sts:AssumeRole"
         Effect = "Allow"
-        Sid    = ""
         Principal = {
           Service = ["lambda.amazonaws.com"]
         }
@@ -124,7 +123,7 @@ resource "aws_iam_role_policy" "notification_service_lambda_policies" {
         "Resource" = "*"
       },
       {
-        "Sid" = "KMS Policies"
+        "Sid" = "KMSPolicies"
         "Effect" = "Allow",
         "Action" = [
           "kms:Decrypt",
