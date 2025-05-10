@@ -105,7 +105,7 @@ resource "aws_iam_role_policy" "notification_service_lambda_policies" {
     Version = "2012-10-17"
     Statement = [
       {
-        "Sid" = "Cloud Watch integration"
+        "Sid" = "CloudWatchIntegration"
         "Effect" = "Allow",
         "Action" = [
           "logs:CreateLogGroup",
@@ -115,7 +115,7 @@ resource "aws_iam_role_policy" "notification_service_lambda_policies" {
         "Resource" = "*"
       },
       {
-        "Sid" = "Secret Manager integration"
+        "Sid" = "SecretManagerIntegration"
         "Effect" = "Allow",
         "Action" = [
           "secretsmanager:GetSecretValue",
@@ -133,7 +133,7 @@ resource "aws_iam_role_policy" "notification_service_lambda_policies" {
         "Resource" = "*"
       },
       {
-        "Sid" = "SQS Integration"
+        "Sid" = "SQSIntegration"
         "Effect" = "Allow",
         "Action" = [
           "sqs:ReceiveMessage",
