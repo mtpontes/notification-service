@@ -17,7 +17,7 @@ data "aws_iam_policy_document" "sqs_queue_policy" {
   policy_id = "arn:aws:sqs:us-west-2:123456789012:user_updates_queue/SQSDefaultPolicy"
 
   statement {
-    sid    = "user_updates_sqs_target"
+    sid    = "UserUpdatesSQSTarget"
     effect = "Allow"
 
     principals {
