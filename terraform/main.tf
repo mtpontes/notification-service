@@ -15,6 +15,8 @@ module "s3" {
   source                                    = "./s3_module"
   publisher_source_code_lambda_s3_zip_name  = var.publisher_source_code_lambda_s3_zip_name
   dispatcher_source_code_lambda_s3_zip_name = var.dispatcher_source_code_lambda_s3_zip_name
+  publisher_source_code_zip                 = var.publisher_source_code_zip
+  dispatcher_source_code_zip                = var.dispatcher_source_code_zip
 }
 
 # SNS & SQS
@@ -30,6 +32,8 @@ module "lambda" {
   sns_topic_arn                             = module.message_services.sns_topic_arn
   publisher_source_code_lambda_s3_zip_name  = var.publisher_source_code_lambda_s3_zip_name
   dispatcher_source_code_lambda_s3_zip_name = var.dispatcher_source_code_lambda_s3_zip_name
+  publisher_source_code_zip                 = var.publisher_source_code_zip
+  dispatcher_source_code_zip                = var.dispatcher_source_code_zip
   whatsapp_api_token                        = var.whatsapp_api_token
   db_username                               = var.db_username
   db_password                               = var.db_password
