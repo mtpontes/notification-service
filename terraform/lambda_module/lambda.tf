@@ -5,9 +5,9 @@ resource "aws_lambda_function" "notification_publisher" {
   role          = aws_iam_role.notification_service_lambda_role.arn
 
   s3_bucket     = var.notification_service_source_bucket_id
-  s3_key        = "${var.publisher_service_lambda_file_zip_name}.zip"
+  s3_key        = "${var.publisher_source_code_lambda_s3_zip_name}.zip"
 
-  source_code_hash = filebase64sha256(var.publisher_service_lambda_file_zip_name)
+  source_code_hash = filebase64sha256(var.publisher_source_code_zip)
 
   runtime       = "python3.13"
   timeout       = 60
@@ -33,9 +33,9 @@ resource "aws_lambda_function" "notification_dispatcher" {
   role          = aws_iam_role.notification_service_lambda_role.arn
 
   s3_bucket     = var.notification_service_source_bucket_id
-  s3_key        = "${var.dispatcher_service_lambda_file_zip_name}.zip"
+  s3_key        = "${var.dispatcher_source_code_lambda_s3_zip_name}.zip"
 
-  source_code_hash = filebase64sha256(var.dispatcher_service_lambda_file_zip_name)
+  source_code_hash = filebase64sha256(var.dispatcher_source_code_zip)
 
   runtime       = "python3.13"
   timeout       = 60

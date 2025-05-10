@@ -8,8 +8,8 @@ jobs:
     env:
       TF_LOG: "DEBUG"
       TF_VAR_region: ${{ vars.REGION }}
-      TF_VAR_publisher_source_code_zip: "notification-publisher"
-      TF_VAR_dispatcher_source_code_zip: "notification-dispatcher"
+      TF_VAR_publisher_source_code_zip: "notification-publisher.zip"
+      TF_VAR_dispatcher_source_code_zip: "notification-dispatcher.zip"
       TF_VAR_publisher_source_code_lambda_s3_zip_name: "publisher-service"
       TF_VAR_dispatcher_source_code_lambda_s3_zip_name: "dispatcher-service"
       TF_VAR_tfstate_bucket_name: ${{ vars.TFSTATE_BUCKET_NAME }}
