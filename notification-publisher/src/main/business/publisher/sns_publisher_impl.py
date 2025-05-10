@@ -1,3 +1,5 @@
+import os
+
 import boto3
 
 from src.main.infra.utils.log_utils import log
@@ -10,10 +12,10 @@ from src.main.application.dto import EventDispatcherDTO, UserDispatcherDTO
 from src.main.infra.providers.notificarion_provider_enum import NotificationProviderEnum
 
 
-class SNSPublisherImpl(PublisherI): # Interface
+class SNSPublisherImpl(PublisherI):
     def __init__(self):
         self.sns_client = boto3.client('sns', region_name='us-east-1')
-        self.sns_arn = 'arn:aws:sns:us-east-1:314146297418:topico-teste'
+        self.sns_arn = os.getenv('SNS_PATH')
         self.mapper = Mapper()
 
     def publish(self, events: list[EventModel], user: UserModel, provider: NotificationProviderEnum) -> None:

@@ -6,10 +6,18 @@ resource "aws_s3_bucket" "notification_service_source_bucket" {
   }
 }
 
-resource "aws_s3_object" "lambda_zip_object" {
+resource "aws_s3_object" "publisher_lambda_zip_object" {
   bucket = aws_s3_bucket.notification_service_source_bucket.id
-  key    = "${var.lambda_file_zip_name}.zip"
-  source = var.code_result_zip
-  etag = filemd5(var.code_result_zip)
+  key    = "${var.publisher_service_lambda_file_zip_name}.zip"
+  source = var.publisher_service_lambda_file_zip_name
+  etag = filemd5(var.publisher_service_lambda_file_zip_name)
+  content_type = "application/zip"
+}
+
+resource "aws_s3_object" "dispatcher_lambda_zip_object" {
+  bucket = aws_s3_bucket.notification_service_source_bucket.id
+  key    = "${var.dispatcher_service_lambda_file_zip_name}.zip"
+  source = var.dispatcher_service_lambda_file_zip_name
+  etag = filemd5(var.dispatcher_service_lambda_file_zip_name)
   content_type = "application/zip"
 }
