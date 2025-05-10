@@ -1,5 +1,5 @@
 resource "aws_lambda_function" "notification_publisher" {
-  function_name = "notification_service_lambda"
+  function_name = "notification_publisher"
   handler       = "lambda_function.lambda_handler"
 
   role          = aws_iam_role.notification_service_lambda_role.arn
@@ -27,7 +27,7 @@ resource "aws_lambda_function" "notification_publisher" {
 }
 
 resource "aws_lambda_function" "notification_dispatcher" {
-  function_name = "notification_service_lambda"
+  function_name = "notification_dispatcher"
   handler       = "lambda_function.lambda_handler"
 
   role          = aws_iam_role.notification_service_lambda_role.arn

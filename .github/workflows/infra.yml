@@ -44,13 +44,13 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: notification-publisher-deployment-package
-          path: ./terraform/artifacts/$TF_VAR_publisher_service_lambda_file_zip_name
+          path: ./terraform
 
       - name: Download artifact for notification-dispatcher
         uses: actions/download-artifact@v4
         with:
           name: notification-dispatcher-deployment-package
-          path: ./terraform/artifacts/$TF_VAR_dispatcher_service_lambda_file_zip_name
+          path: ./terraform
       
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
