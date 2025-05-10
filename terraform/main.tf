@@ -43,5 +43,5 @@ module "lambda" {
 module "event_bridge" {
   source                                = "./event_bridge"
   depends_on                            = [ module.lambda.notification_service_lambda_arn ]
-  notification_service_lambda_arn       = module.lambda.notification_service_lambda_arn
+  notification_service_lambda_arn       = module.lambda.publisher_lambda_arn
 }

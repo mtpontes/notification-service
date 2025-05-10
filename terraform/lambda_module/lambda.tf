@@ -59,10 +59,17 @@ resource "aws_cloudwatch_log_group" "notification_service_lambda_logs" {
   retention_in_days = 30
 }
 
-resource "aws_lambda_permission" "allow_scheduler" {
+resource "aws_lambda_permission" "publisher_allow_scheduler" {
   statement_id  = "AllowExecutionFromEventBridge"
   action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.notification_service_lambda.function_name
+  function_name = aws_lambda_function.notification_dispatcher.function_name
+  principal     = "scheduler.amazonaws.com"
+}
+
+resource "aws_lambda_permission" "dispatcher_allow_scheduler" {
+  statement_id  = "AllowExecutionFromEventBridge"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.notification_publisher.function_name
   principal     = "scheduler.amazonaws.com"
 }
 
