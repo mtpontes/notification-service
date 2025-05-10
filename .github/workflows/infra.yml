@@ -52,6 +52,9 @@ jobs:
           name: notification-dispatcher-deployment-package
           path: ./terraform
       
+      - name: List downloaded files
+        run: ls -R ./terraform
+      
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
 
