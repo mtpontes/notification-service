@@ -1,40 +1,54 @@
-############################### Terraform Config ###############################
-provider "aws" {
-  region = var.region
-}
-
-# Backend is configured with arguments via pipeline
-terraform {
-  backend "s3" {}
-}
-
 ################################### Modules ####################################
 
 # S3
-module "s3" {
-  source                = "./s3_module"
-  lambda_file_zip_name  = var.lambda_file_zip_name
-  code_result_zip       = var.code_result_zip
+module "bucket" {
+  source = "./bucket"
+
+  # Source code
+  publisher_source_code_lambda_s3_zip_name  = var.publisher_source_code_lambda_s3_zip_name
+  dispatcher_source_code_lambda_s3_zip_name = var.dispatcher_source_code_lambda_s3_zip_name
+  publisher_source_code_zip                 = var.publisher_source_code_zip
+  dispatcher_source_code_zip                = var.dispatcher_source_code_zip
 }
 
-# Lambda
-module "lambda" {
-  source                                = "./lambda_module"
-  depends_on                            = [ module.s3.lambda_zip_object_id ]
-  notification_service_source_bucket_id = module.s3.notification_service_source_bucket_id
-  code_result_zip                       = var.code_result_zip
-  lambda_file_zip_name                  = var.lambda_file_zip_name
-  whatsapp_api_token                    = var.whatsapp_api_token
-  db_username                           = var.db_username
-  db_password                           = var.db_password
-  db_name                               = var.db_name
-  db_port                               = var.db_port
-  db_uri                                = var.db_uri
-  db_uri_args                           = var.db_uri_args
+# SNS & SQS
+module "message" {
+  source = "./message"
 }
 
+# Lambdas
+module "serverless" {
+  source     = "./serverless"
+  depends_on = [module.bucket, module.message]
+
+  # Dependencies
+  notification_service_source_bucket_id = module.bucket.notification_service_source_bucket_id
+  sns_topic_arn                         = module.message.sns_topic_arn
+  sqs_publisher_queue_arn               = module.message.sqs_publisher_queue_arn
+
+  # Source code
+  publisher_source_code_lambda_s3_zip_name  = var.publisher_source_code_lambda_s3_zip_name
+  dispatcher_source_code_lambda_s3_zip_name = var.dispatcher_source_code_lambda_s3_zip_name
+  publisher_source_code_zip                 = var.publisher_source_code_zip
+  dispatcher_source_code_zip                = var.dispatcher_source_code_zip
+
+  # Database
+  db_username = var.db_username
+  db_password = var.db_password
+  db_name     = var.db_name
+  db_port     = var.db_port
+  db_uri      = var.db_uri
+  db_uri_args = var.db_uri_args
+
+  # Integration
+  whatsapp_api_token = var.whatsapp_api_token
+}
+
+# Event Bridge
 module "event_bridge" {
-  source                          = "./event_bridge"
-  depends_on                      = [ module.lambda.notification_service_lambda_arn ]
-  notification_service_lambda_arn = module.lambda.notification_service_lambda_arn
+  source     = "./scheduler"
+  depends_on = [module.serverless.lambda_function_publisher_arn]
+
+  # Dependencies
+  lambda_function_publisher_arn = module.serverless.lambda_function_publisher_arn
 }

@@ -6,7 +6,7 @@ The system is completely open to the creation of new notification providers; by 
 
 ## System overview
 
-![application-schema](/assets/application.png)
+![application-schema](/assets/application.svg)
 
 ## Tecnologies
 
