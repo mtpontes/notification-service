@@ -28,7 +28,7 @@ The system is completely open to the creation of new notification providers; by 
 <details>
     <summary><h2>Details</h2></summary>
 
-### Data Structures (models e MongoDB collections)
+### Data Structures (models & MongoDB collections)
 
 #### User:
 ``` python
