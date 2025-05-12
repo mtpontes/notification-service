@@ -1,7 +1,7 @@
 import os
 from dataclasses import dataclass
 
-from src.main.infra.environment.environment_consts import DatabaseConsts
+from src.main.infra.environment.environment_consts import EnvDatabaseConsts
 
 
 @dataclass(frozen=True)
@@ -15,11 +15,11 @@ class DatabaseConfig:
     @staticmethod
     def load_from_env():
         return DatabaseConfig(
-            uri=os.getenv(DatabaseConsts.DB_URI, 'mongodb://localhost:27017'),
-            username=os.getenv(DatabaseConsts.DB_USERNAME, 'admin'),
-            password=os.getenv(DatabaseConsts.DB_PASSWORD, 'admin'),
-            database=os.getenv(DatabaseConsts.DB_NAME),
-            uri_args=os.getenv(DatabaseConsts.DB_URI_ARGS),
+            uri=os.getenv(EnvDatabaseConsts.DB_URI, 'mongodb://localhost:27017'),
+            username=os.getenv(EnvDatabaseConsts.DB_USERNAME, 'admin'),
+            password=os.getenv(EnvDatabaseConsts.DB_PASSWORD, 'admin'),
+            database=os.getenv(EnvDatabaseConsts.DB_NAME),
+            uri_args=os.getenv(EnvDatabaseConsts.DB_URI_ARGS),
         )
     
     def build_connection_string(self) -> str:

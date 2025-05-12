@@ -1,0 +1,2 @@
+class AWSServicesConsts:
+    SNS = 'sns'

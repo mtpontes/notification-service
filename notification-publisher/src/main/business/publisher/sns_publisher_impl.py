@@ -8,14 +8,16 @@ from src.main.domain.models.user_model import UserModel
 from src.main.domain.models.event_model import EventModel
 from src.main.business.publisher.publisher_i import PublisherI
 from src.main.infra.utils.publisher_utils import PublisherUtils
+from src.main.infra.constants.constants import AWSServicesConsts
+from src.main.infra.environment.environment_consts import EnvAWSConsts
 from src.main.application.dto import EventDispatcherDTO, UserDispatcherDTO
 from src.main.infra.providers.notificarion_provider_enum import NotificationProviderEnum
 
 
 class SNSPublisherImpl(PublisherI):
     def __init__(self):
-        self.sns_client = boto3.client('sns', region_name='us-east-1')
-        self.sns_arn = os.getenv('SNS_PATH')
+        self.sns_client = boto3.client(AWSServicesConsts.SNS, region_name='us-east-1')
+        self.sns_arn = os.getenv(EnvAWSConsts.SNS_PATH)
         self.mapper = Mapper()
 
     def publish(self, events: list[EventModel], user: UserModel, provider: NotificationProviderEnum) -> None:
