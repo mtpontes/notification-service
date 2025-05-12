@@ -1,38 +1,40 @@
-name: Build zip artifact
+name: Build zip artifacts for both Lambdas
 on:
   workflow_call:
 
 jobs:
-
-  build-artifact:
+  build-artifacts:
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        service: [notification-publisher, notification-dispatcher]
+
     steps:
-      - name: Set up repository files
+      - name: Checkout repository
         uses: actions/checkout@v4
-      
+
       - name: Set up Python 3.10
         uses: actions/setup-python@v4
         with:
           python-version: "3.10"
-      
-      - name: Install dependencies
+
+      - name: Install dependencies and build for ${{ matrix.service }}
         run: |
-          python -m pip install --upgrade pip
-          mkdir package
+          SERVICE=${{ matrix.service }}
+          cd $SERVICE
+          mkdir -p package
+          pip install --upgrade pip
           pip install -r requirements.txt -t package/
           cp -r src package/
           cp lambda_function.py package/
-
-      - name: Create deployment zip
-        run: |
           cd package
-          zip -r "../${{ vars.CODE_RESULT_ZIP }}" .
-          cd ..
+          zip -r "../../${SERVICE}.zip" .
+          cd ../..
 
-      - name: Upload artifact
+      - name: Upload artifact for ${{ matrix.service }}
         uses: actions/upload-artifact@v4
         with:
-          name: lambda-deployment-package
-          path: ${{ vars.CODE_RESULT_ZIP }}
+          name: ${{ matrix.service }}-deployment-package
+          path: ${{ matrix.service }}.zip
           retention-days: 1

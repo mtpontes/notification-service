@@ -6,7 +6,7 @@ The system is completely open to the creation of new notification providers; by 
 
 ## System overview
 
-![application-schema](/assets/application.png)
+![application-schema](/assets/application.svg)
 
 ## Tecnologies
 
@@ -28,7 +28,7 @@ The system is completely open to the creation of new notification providers; by 
 <details>
     <summary><h2>Details</h2></summary>
 
-### Data Structures
+### Data Structures (models e MongoDB collections)
 
 #### User:
 ``` python
@@ -62,18 +62,17 @@ user: User
 Roles used:
 - AmazonEventBridgeFullAccess
 - AmazonS3FullAccess
+- AmazonSNSFullAccess
+- AmazonSQSFullAccess
+- AWSLambda_FullAccess
 - CloudWatchLogsFullAccess
-- AmazonDynamoDBFullAccess
-- Action: iam:*
+- iam:*
 
 <details>
     <summary><h3>Envs</h3></summary>
 
-#### Lambda:
+#### Lambda - Publisher:
 ```.env
-# API token
-WHATSAPP_API_TOKEN
-
 # Database
 DB_USERNAME
 DB_PASSWORD
@@ -81,13 +80,20 @@ DB_NAME
 DB_PORT
 DB_URI
 DB_URI_ARGS # Opcional
+
+# AWS
+SNS_PATH
+```
+
+#### Lambda - Dispatcher:
+```.env
+# API token
+WHATSAPP_API_TOKEN
 ```
 
 #### Pipeline vars/secrets:
 ```
 # Vars
-CODE_RESULT_ZIP
-LAMBDA_FILE_ZIP_NAME
 REGION
 TFSTATE_BUCKET_NAME
 
@@ -108,10 +114,12 @@ WHATSAPP_API_TOKEN
 #### Terraform envs:
 ``` .env
 TF_LOG
-TF_VAR_code_result_zip
+TF_VAR_publisher_source_code_zip
+TF_VAR_dispatcher_source_code_zip
+TF_VAR_publisher_source_code_lambda_s3_zip_name
+TF_VAR_dispatcher_source_code_lambda_s3_zip_name
 TF_VAR_region
 TF_VAR_tfstate_bucket_name
-TF_VAR_lambda_file_zip_name
 TF_VAR_whatsapp_api_token
 TF_VAR_db_username
 TF_VAR_db_password
