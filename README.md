@@ -18,6 +18,8 @@ In addition, the notification is parameterized according to the preferences of e
 - AWS S3
 - AWS Lambda
 - AWS Event Bridge
+- AWS SNS
+- AWS SQS
 
 ### Optional tools
 - AWS Secret Manager: Used for provider Google Calendar, what a need for user credentials. The tool is optional as all provider is optional.
